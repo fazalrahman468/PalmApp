@@ -1,0 +1,32 @@
+import {StyleSheet} from 'react-native';
+import Colors from '../../assets/colors/Colors';
+
+
+export const style = StyleSheet.create({
+  container: {backgroundColor: Colors.white, flex: 1},
+  background:{flex: 1},
+  image:{ 
+  justifyContent: "center", 
+  alignItems: "center",
+  marginTop: "60%"
+  },
+  palmText:{
+    marginTop: 10,
+    fontSize: 16, 
+    color: Colors.white,
+    textAlign: "center",
+    paddingHorizontal: 24,
+    lineHeight: 24
+  },
+  buttonView:{
+    marginTop: "50%",
+    justifyContent: "center",
+    alignItems: "center"
+
+  },
+  already:{
+    marginTop: 24,
+    fontSize: 14,
+  }
+
+});

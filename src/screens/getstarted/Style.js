@@ -13,6 +13,7 @@ export const style = StyleSheet.create({
   palmText:{
     marginTop: 10,
     fontSize: 16, 
+    fontFamily: 'Inter-Medium',
     color: Colors.white,
     textAlign: "center",
     paddingHorizontal: 24,
@@ -21,12 +22,15 @@ export const style = StyleSheet.create({
   buttonView:{
     marginTop: "50%",
     justifyContent: "center",
-    alignItems: "center"
+    alignItems: "center",
+    width: "90%",
+    marginHorizontal: 18
 
   },
   already:{
     marginTop: 24,
     fontSize: 14,
+    fontFamily: 'Inter-Medium'
   }
 
 });

@@ -1,5 +1,6 @@
 const primary = '#26BA78';
 const white = '#FFFFFF';
+const strokeWhite = '#EAEAEA';
 const black = '#000000';
 const black1 = '#000000 10%';
 const blackText = '#212121';
@@ -18,6 +19,7 @@ const background = '#F6F9FF';
 export default {
   primary,
   white,
+  strokeWhite,
   black,
   black1,
   blackText,

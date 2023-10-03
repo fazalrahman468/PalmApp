@@ -3,11 +3,11 @@ import {View, Text, TouchableOpacity, StyleSheet } from 'react-native'
 import Colors from '../assets/colors/Colors';
 import { Image } from 'react-native-svg';
 
-function SectionHeader({ Image, title}) {
+function SectionHeader({ icon, title}) {
   return (
     <View style={styles.container}>
         <View style={styles.gView}>
-            <TouchableOpacity>{Image}</TouchableOpacity>
+            <TouchableOpacity>{icon}</TouchableOpacity>
             <View 
             style={{
             flex: 1,
@@ -31,7 +31,8 @@ const styles = StyleSheet.create({
       alignItems: 'center',
     },
     g: {
-      fontSize: 24,
+      fontSize: 16,
+      fontFamily: 'Inter-Medium',
       color: Colors.white,
     },
   });

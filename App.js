@@ -1,8 +1,11 @@
 import React from 'react'
-import Signup from './src/screens/signup/Signup'
+import { NavigationContainer } from '@react-navigation/native'
+import AppStack from './src/navigation/AppStack'
 
 export default function App() {
   return ( 
-    <Signup/>
-  )
+    <NavigationContainer>
+      <AppStack/>
+    </NavigationContainer>
+  );
 }

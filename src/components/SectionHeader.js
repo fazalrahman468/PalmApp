@@ -1,13 +1,14 @@
 import React from 'react'
 import {View, Text, TouchableOpacity, StyleSheet } from 'react-native'
 import Colors from '../assets/colors/Colors';
-import { Image } from 'react-native-svg';
+import {useNavigation} from '@react-navigation/native'
 
 function SectionHeader({ icon, title}) {
+  const navigation = useNavigation();
   return (
     <View style={styles.container}>
         <View style={styles.gView}>
-            <TouchableOpacity>{icon}</TouchableOpacity>
+            <TouchableOpacity onPress={() => navigation.goBack()}>{icon}</TouchableOpacity>
             <View 
             style={{
             flex: 1,

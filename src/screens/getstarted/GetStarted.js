@@ -3,6 +3,7 @@ import React from 'react'
 import { style } from './Style'
 import Button from '../../components/Button'
 import {useNavigation} from '@react-navigation/native';
+import Logo from '../../assets/images/Logo.svg';
 
 export default function GetStarted() {
   const navigation = useNavigation();
@@ -11,7 +12,7 @@ export default function GetStarted() {
       <ImageBackground source={require('../../assets/images/Bg.png')}
       style={style.background}>
       <View style={style.image}>
-      <Image source={require('../../assets/images/Logo.png')}/>
+      <Logo/>
       </View>
       <Text style={style.palmText}>Find and create live community rooms for whatever you're into </Text>
       <View style={style.buttonView}>

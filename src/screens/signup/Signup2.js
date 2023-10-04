@@ -1,5 +1,5 @@
 import React from 'react';
-import {View, Text, Image } from 'react-native';
+import {View, Text, Image, TouchableOpacity, TextInput } from 'react-native';
 import { style } from './Style';
 import SectionHeader from '../../components/SectionHeader';
 import BackArrow from '../../assets/images/BackArrow.svg';
@@ -8,28 +8,16 @@ import Phone from '../../assets/images/Phone.svg';
 import Calendar from '../../assets/images/Calendar.svg';
 import EmailInput from '../../components/EmailInput';
 import EmailInput1 from '../../components/EmailInput1';
-import Sand from '../../assets/images/Sand.svg';
 import Button from '../../components/Button';
 import {useNavigation} from '@react-navigation/native';
 
 
 
-export default function Signup() {
+export default function Signup2() {
    const navigation = useNavigation();
-   
   return (
     <View style={style.container}>
     <SectionHeader icon={<BackArrow/>} title='Verify your humanity'/>    
-     <Text style={style.account}>Create your account</Text>
-     <View style={style.google}>
-     <Image source={require('../../assets/images/Google.png')}/>
-     <Text style={style.googleText}>Continue with Google</Text>
-     </View>
-     <View style={style.apple}>
-     <Image source={require('../../assets/images/Apple.png')}/>
-     <Text style={style.appleText}>Continue with Apple</Text>
-     </View>
-     <Text style={style.using}>Or Using</Text>
      <View style={style.box}>
      <View style={{ flexDirection: "row"}}>
      <View style={style.john}>
@@ -58,10 +46,10 @@ export default function Signup() {
      </View>
      </View>
      <View style={{marginTop: 12,}}>
-     <Button title={'Next'} screen={'Signup2'} navigation={navigation}/>
+     <Button title={'Next'} screen={'ConfirmCode'} navigation={navigation}/>
      </View>
      </View>
-     <Sand/>
+     
     </View>
   )
 }

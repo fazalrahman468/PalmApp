@@ -12,18 +12,6 @@ export const style = StyleSheet.create({
       margin: 16,
       borderRadius: 16
     },
-   
-    code:{
-      fontFamily: 'Inter-SemiBold',
-      fontSize: 20,
-      color: Colors.black1,
-      marginTop: 16
-    },
-    enter:{
-      fontSize: 14,
-      fontFamily: 'Inter-Regular',
-      color : Colors.black1
-    },
     password:{
       backgroundColor: Colors.strokeWhite, 
       borderRadius: 12, 
@@ -41,6 +29,6 @@ export const style = StyleSheet.create({
       paddingLeft:12
     },
     buttonView:{
-      marginTop: "25%"
+      marginTop: "5%"
     }
 });

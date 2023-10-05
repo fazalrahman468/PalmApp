@@ -10,23 +10,22 @@ import Lock from '../../assets/images/Lock.svg'
 import Eye from '../../assets/images/Eye.svg'
 import EmailInput1 from '../../components/EmailInput1'
 
-export default function CreatePassword() {
+export default function NewPassword() {
   const navigation = useNavigation();
   return (
     <View style={style.container}>
-      <SectionHeader icon={<BackArrow/>} title='Create Password'/>
+      <SectionHeader icon={<BackArrow/>}/>
       <View style={style.box}>
-            <Text style={style.code}>You'll need a password</Text>
-            <Text style={style.enter}>Make sure it's 8 characters or more </Text>
+           
            <View style={style.password}>
-           <EmailInput icon={<Lock/>} placeholder='Password'/>
+           <EmailInput icon={<Lock/>} placeholder='Create New Password'/>
            <Eye/>
            </View>
            <View style={style.confirm}>
-           <EmailInput1 icon={<Lock/>} placeholder='Confirm Password'/>
+           <EmailInput1 icon={<Lock/>} placeholder='Confirm New Password'/>
            </View>
            <View style={style.buttonView}>
-                <Button title={'Next'} screen={'WelcomeBack'} navigation={navigation}/>
+                <Button title={'Continue'} screen={'RecPassword'} navigation={navigation}/>
             </View>
 
         </View>

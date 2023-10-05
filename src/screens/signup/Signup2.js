@@ -21,20 +21,20 @@ export default function Signup2() {
      <View style={style.box}>
      <View style={{ flexDirection: "row"}}>
      <View style={style.john}>
-        <User/>
-        <EmailInput placeholder='John' />
+        
+        <EmailInput icon={<User/>} placeholder='John' />
      </View>
      <View style={style.doe}>
      <EmailInput placeholder= 'Doe'/>
      </View>
      </View>
      <View style={style.phone}>
-        <Phone/>
-        <EmailInput1 placeholder='Phone Number' />
+        
+        <EmailInput1 icon={<Phone/>} placeholder='Phone Number' />
      </View>
      <View style={style.phone}>
-        <Calendar/>
-        <EmailInput1 placeholder='Date of birth' />
+        
+        <EmailInput1 icon={<Calendar/>} placeholder='Date of birth' />
      </View>
      <View style={style.genView}>
      <Text style={style.gen}>Gender</Text>

@@ -85,7 +85,7 @@ export const style = StyleSheet.create({
     alignItems: "center",
     justifyContent: "space-around",
     borderRadius: 12,
-    paddingLeft: 12,
+    // paddingLeft: 12,
     width: "50%"
   }, 
   doe:{
@@ -101,7 +101,7 @@ export const style = StyleSheet.create({
     alignItems: "center",
     justifyContent: "space-around",
     borderRadius: 12,
-    paddingLeft: 12,
+    // paddingLeft: 12,
     marginTop: 12
 },
 genView:{

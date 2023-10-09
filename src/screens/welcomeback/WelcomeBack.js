@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState} from 'react'
 import {View, Text, TouchableOpacity} from 'react-native'
 import { style } from './Style'
 import SectionHeader from '../../components/SectionHeader'
@@ -11,10 +11,25 @@ import EmailInput from '../../components/EmailInput'
 import Osios from '../../components/Osios'
 import Sand from '../../assets/images/Sand.svg'
 import {useNavigation} from '@react-navigation/native';
+import { login } from '../../api/Api';
 
 
 export default function WelcomeBack() {
+
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+
   const navigation = useNavigation();
+
+  const handleLogin = async () => {
+    try {
+      const response = await login(email, password);
+      console.log(response.data);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   return (
     <View style={style.container}>
         <SectionHeader icon={<BackArrow/>}/>
@@ -23,15 +38,24 @@ export default function WelcomeBack() {
         </View>
         <View style={style.box}>
             <View style={style.confirm}>
-           <EmailInput icon={<Mail/>} placeholder='Johndoe@gmail.com'/>
+           <EmailInput 
+           icon={<Mail/>} 
+           placeholder='Johndoe@gmail.com'
+           value={email}
+           onChangeText={setEmail}/>
            </View>
            <View style={style.password}>
-           <EmailInput icon={<Lock/>} placeholder='Password'/>
+           <EmailInput 
+           icon={<Lock/>} 
+           placeholder='Password'
+           value={password}
+           onChangeText={setPassword}
+           secureTextEntry/>
            <Eye/>
            </View>
            
            <View style={style.buttonView}>
-                <Button title={'Login'}/>
+                <Button title={'Login'} screen={'Home'} navigation={navigation} onPress={handleLogin}/>
             </View>
             <Text style={style.phone}>Continue with Phone Number</Text>
         </View>

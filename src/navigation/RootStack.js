@@ -1,16 +1,17 @@
 import React from 'react';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import Home from '../screens/home/Home';
+import AppStack from './AppStack';
 import AuthStack from './AuthStack';
 
 
 const Stack = createNativeStackNavigator();
 
-function AppStack () {
+function RootStack () {
     return(
        <Stack.Navigator screenOptions={{headerShown: false}}>
-        <Stack.Screen name='Home' component={Home}/>
-      </Stack.Navigator>
+        <Stack.Screen name='Auth' component={AuthStack}/>
+        <Stack.Screen name='App' component={AppStack}/>
+       </Stack.Navigator>
     );
 }
-export default AppStack;
+export default RootStack;

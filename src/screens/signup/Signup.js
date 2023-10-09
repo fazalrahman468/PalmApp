@@ -3,8 +3,6 @@ import {View, Text, Image } from 'react-native';
 import { style } from './Style';
 import SectionHeader from '../../components/SectionHeader';
 import BackArrow from '../../assets/images/BackArrow.svg';
-import Google from '../../assets/images/Google.svg';
-import Apple from '../../assets/images/Apple.svg';
 import User from '../../assets/images/User.svg';
 import Phone from '../../assets/images/Phone.svg';
 import Calendar from '../../assets/images/Calendar.svg';
@@ -14,6 +12,7 @@ import Sand from '../../assets/images/Sand.svg';
 import Button from '../../components/Button';
 import {useNavigation} from '@react-navigation/native';
 import Osios from '../../components/Osios';
+import Mail from '../../assets/images/Mail.svg';
 
 
 
@@ -35,6 +34,10 @@ export default function Signup() {
      <View style={style.doe}>
      <EmailInput placeholder= 'Doe'/>
      </View>
+     </View>
+     <View style={style.phone}>
+        
+        <EmailInput1 icon={<Mail/>} placeholder='Email' />
      </View>
      <View style={style.phone}>
         

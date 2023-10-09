@@ -26,7 +26,7 @@ export default function CreatePassword() {
            <EmailInput1 icon={<Lock/>} placeholder='Confirm Password'/>
            </View>
            <View style={style.buttonView}>
-                <Button title={'Next'} screen={'WelcomeBack'} navigation={navigation}/>
+                <Button title={'Submit'} screen={'WelcomeBack'} navigation={navigation}/>
             </View>
 
         </View>

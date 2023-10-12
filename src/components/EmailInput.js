@@ -29,7 +29,7 @@ const styles = StyleSheet.create({
     fontSize: 14,
     fontFamily: 'Inter-Medium',
     marginLeft: 12,
-    flex:1
+    flex:1, color: Colors.black
     
   },
 });

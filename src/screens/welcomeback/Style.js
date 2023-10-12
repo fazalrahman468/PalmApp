@@ -36,7 +36,8 @@ export const style = StyleSheet.create({
         
       },
       buttonView:{
-        marginTop: "5%"
+        marginTop: "5%",
+        // backgroundColor: Colors.black
       },
       phone:{
         fontSize: 14,

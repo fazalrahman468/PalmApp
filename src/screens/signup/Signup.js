@@ -1,4 +1,4 @@
-import React from 'react';
+import React,{useState} from 'react';
 import {View, Text, Image } from 'react-native';
 import { style } from './Style';
 import SectionHeader from '../../components/SectionHeader';
@@ -18,6 +18,35 @@ import Mail from '../../assets/images/Mail.svg';
 
 export default function Signup() {
    const navigation = useNavigation();
+
+   const [firstName, setFirstName] = useState(''); 
+   const [lastName, setLastName] = useState('');
+   const [email, setEmail] = useState('');
+   const [phone, setPhone] = useState('');
+   const [date, setDate] = useState('');
+
+   const [firstNameError, setFirstNameError] = useState(''); 
+   const [lastNameError, setLastNameError] = useState('');
+   const [emailError, setEmailError] = useState('');
+   const [phoneError, setPhoneError] = useState('');
+   const [dateError, setDateError] = useState('');
+
+   const saveData = async() => {
+   
+      if (!firstName) {
+         setFirstNameError(true)
+      }
+
+      if (!firstName){
+         return false
+      }
+
+   const url= 'https://7tracking.com/palm/api.php';
+   let result = await fetch(url, {
+      method: "POST",
+      body: JSON.stringify({firstName, lastName, email, phone, date})
+   });
+   }
    
   return (
     <View style={style.container}>
@@ -29,23 +58,47 @@ export default function Signup() {
      <View style={{ flexDirection: "row"}}>
      <View style={style.john}>
         
-        <EmailInput icon={<User/>} placeholder='John' />
+        <EmailInput 
+        icon={<User/>} 
+        placeholder='John' 
+        value={firstName}
+        onChangeText={(text) => setFirstName(text)}
+        />
+        {firstNameError ? <Text>Please enter a name</Text> : null}
      </View>
      <View style={style.doe}>
-     <EmailInput placeholder= 'Doe'/>
+     <EmailInput 
+     placeholder= 'Doe'
+     value={lastName}
+     onChangeText={(text) => setLastName(text)}
+     />
      </View>
      </View>
      <View style={style.phone}>
         
-        <EmailInput1 icon={<Mail/>} placeholder='Email' />
+        <EmailInput1 
+        icon={<Mail/>} 
+        placeholder='Email' 
+        value={email}
+        onChangeText={(text) => setEmail(text)}
+        />
      </View>
      <View style={style.phone}>
         
-        <EmailInput1 icon={<Phone/>} placeholder='Phone Number' />
+        <EmailInput1 
+        icon={<Phone/>} 
+        placeholder='Phone Number' 
+        value={phone}
+        onChangeText={(text) => setPhone(text)}
+        />
      </View>
      <View style={style.phone}>
         
-        <EmailInput1 icon={<Calendar/>} placeholder='Date of birth' />
+        <EmailInput1 
+        icon={<Calendar/>} 
+        placeholder='Date of birth' 
+        value={date}
+        onChangeText={(text) => setDate(text)}/>
      </View>
      <View style={style.genView}>
      <Text style={style.gen}>Gender</Text>
@@ -57,7 +110,11 @@ export default function Signup() {
      </View>
      </View>
      <View style={{marginTop: 12,}}>
-     <Button title={'Next'} screen={'Signup2'} navigation={navigation}/>
+     <Button title={'Next'} 
+     screen={'Signup2'} 
+     navigation={navigation} 
+     onPress={saveData}
+     />
      </View>
      </View>
      <Sand/>

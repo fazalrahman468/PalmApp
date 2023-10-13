@@ -9,6 +9,7 @@ import Tweet2 from '../../components/Tweet2'
 import Tweet3 from '../../components/Tweet3'
 import Tweet4 from '../../components/Tweet4'
 import {useNavigation} from '@react-navigation/native'; 
+import Colors from '../../assets/colors/Colors'
 
 
 export default function Home() {
@@ -21,7 +22,7 @@ export default function Home() {
      </TouchableOpacity>
      <Logo1/>
      <TouchableOpacity onPress={() => navigation.navigate('GetStarted')}>
-     <Bell/>
+     <Text style={{fontFamily: 'Inter-Medium', color : Colors.white, fontSize: 14}}>Log out</Text>
      </TouchableOpacity>
     </View>
     <ScrollView alwaysBounceVertical>

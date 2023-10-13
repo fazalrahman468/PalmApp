@@ -86,10 +86,10 @@ export const style = StyleSheet.create({
     justifyContent: "space-around",
     borderRadius: 12,
     // paddingLeft: 12,
-    width: "50%"
+    // width: "50%"
   }, 
   doe:{
-    width: "45%", 
+    // width: "45%", 
     paddingLeft: 12, 
     backgroundColor: Colors.strokeWhite, 
     borderRadius: 12, 

@@ -7,7 +7,7 @@ function EmailInput1({icon, ...otherProps}) {
     <View style={styles.container}>
       {icon}
       <TextInput
-        placeholderTextColor="#B3B5B5"
+        placeholderTextColor="#000000"
         style={styles.email}
         {...otherProps}
       />
@@ -29,7 +29,8 @@ const styles = StyleSheet.create({
     fontSize: 14,
     fontFamily: 'Inter-Medium',
     marginLeft: 10,
-    flex:1
+    flex:1,
+    color: Colors.black
     
   },
 });

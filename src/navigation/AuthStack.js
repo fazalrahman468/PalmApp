@@ -21,7 +21,6 @@ function AuthStack () {
        <Stack.Navigator screenOptions={{headerShown: false}}>
         <Stack.Screen name='GetStarted' component={GetStarted}/>
         <Stack.Screen name='Signup' component={Signup}/>
-        <Stack.Screen name='Signup2' component={Signup2}/>
         <Stack.Screen name='ConfirmCode' component={ConfirmCode}/>
         <Stack.Screen name='CreatePassword' component={CreatePassword}/>
         <Stack.Screen name='WelcomeBack' component={WelcomeBack}/>

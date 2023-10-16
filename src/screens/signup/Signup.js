@@ -1,20 +1,25 @@
 import React, {useState} from 'react';
-import {View, Text, ScrollView, Button, ActivityIndicator} from 'react-native';
+import {
+  View,
+  Text,
+  ScrollView,
+  Button,
+  ActivityIndicator,
+  TouchableOpacity,
+} from 'react-native';
 import {style} from './Style';
 import SectionHeader from '../../components/SectionHeader';
 import BackArrow from '../../assets/images/BackArrow.svg';
 import User from '../../assets/images/User.svg';
-import Phone from '../../assets/images/Phone.svg';
-import Calendar from '../../assets/images/Calendar.svg';
 import EmailInput from '../../components/EmailInput';
 import EmailInput1 from '../../components/EmailInput1';
 import Sand from '../../assets/images/Sand.svg';
-// import Button from '../../components/Button';
 import {useNavigation} from '@react-navigation/native';
 import Osios from '../../components/Osios';
 import Mail from '../../assets/images/Mail.svg';
-import Colors from '../../assets/colors/Colors';
 import axios from 'axios';
+import PhoneNumberInput from '../../components/PhoneSelector';
+import DateInput from '../../components/Date';
 
 export default function Signup() {
   const navigation = useNavigation();
@@ -26,6 +31,7 @@ export default function Signup() {
   const [date, setDate] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [otp, setOtp] = useState();
+  const [selectedGender, setSelectedGender] = useState('male');
 
   const [errors, setErrors] = useState({
     firstName: '',
@@ -73,7 +79,6 @@ export default function Signup() {
       const receivedOtp = response.data.otp;
       setOtp(receivedOtp);
 
-      // Navigate to the OTP verification screen
       navigation.navigate('ConfirmCode', {
         otp: receivedOtp,
       });
@@ -81,7 +86,6 @@ export default function Signup() {
       console.error('Error sending OTP:', error);
       setIsLoading(false);
     }
-
   };
 
   return (
@@ -135,27 +139,11 @@ export default function Signup() {
             <Text style={{color: 'red'}}>{errors.email}</Text>
           ) : null}
 
-          <View style={style.phone}>
-            <EmailInput1
-              icon={<Phone />}
-              placeholder="Phone Number"
-              value={phone}
-              onChangeText={text => setPhone(text)}
-              keyboardType="phone-pad"
-            />
-          </View>
+          <PhoneNumberInput />
           {errors.phone ? (
             <Text style={{color: 'red'}}>{errors.phone}</Text>
           ) : null}
-
-          <View style={style.phone}>
-            <EmailInput1
-              icon={<Calendar />}
-              placeholder="Date of birth"
-              value={date}
-              onChangeText={text => setDate(text)}
-            />
-          </View>
+          <DateInput />
           {errors.date ? (
             <Text style={{color: 'red'}}>{errors.date}</Text>
           ) : null}
@@ -163,10 +151,19 @@ export default function Signup() {
           <View style={style.genView}>
             <Text style={style.gen}>Gender</Text>
             <View style={style.genCon}>
-              <View style={style.male}>
-                <Text style={style.maleText}>Male</Text>
+              <View style={[style.male, selectedGender === 'male' ? style.selectedGender : null]}>
+                <TouchableOpacity onPress={() => setSelectedGender('male')}
+                style={{ backgroundColor: selectedGender === 'male' ? 'white' : 'transparent' }}>
+                  <Text style={style.maleText}>Male</Text>
+                </TouchableOpacity>
               </View>
-              <Text style={style.femaleText}>Female</Text>
+              <View style={[style.femaleStyle, selectedGender === 'female' ? style.selectedGender : null]}>
+              <TouchableOpacity onPress={() => setSelectedGender('female')}
+              style={{ backgroundColor: selectedGender === 'female' ? 'white' : 'transparent' }}>
+                <Text style={style.femaleText}>Female</Text>
+              </TouchableOpacity>
+
+              </View>
             </View>
           </View>
           <View style={{marginTop: 12}}>
@@ -175,11 +172,6 @@ export default function Signup() {
             ) : (
               <Button title="Next" onPress={saveData} color="#26BA78" />
             )}
-            {/* <Button title={'Next'} 
-     screen={'ConfirmCode'} 
-     navigation={navigation} 
-     onPress={saveData}
-     /> */}
           </View>
         </View>
 

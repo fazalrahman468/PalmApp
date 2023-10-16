@@ -127,12 +127,20 @@ genCon:{
     paddingHorizontal: 6
 },
 male:{
-    backgroundColor: Colors.white, 
+    // backgroundColor: Colors.white, 
     width: '50%', 
     // height: "40%",
     alignItems: "center", 
     justifyContent: "center", 
     borderRadius: 12,
+},
+femaleStyle:{
+  backgroundColor: Colors.strokeWhite, 
+  width: '50%', 
+  // height: "40%",
+  alignItems: "center", 
+  justifyContent: "center", 
+  borderRadius: 12,
 },
 maleText:{
     color: Colors.black, 

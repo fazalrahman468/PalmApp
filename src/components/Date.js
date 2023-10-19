@@ -14,6 +14,8 @@ const DateInput = () => {
     setDate(currentDate);
   };
 
+  // const [inputValue, setInputValue] = useState('');
+
   return (
     <View
       style={{
@@ -27,17 +29,21 @@ const DateInput = () => {
       <TouchableOpacity onPress={() => setShowDatePicker(true)}>
         <Calendar />
       </TouchableOpacity>
+      <TouchableOpacity>
       <TextInput
         style={{
           flex: 1,
           fontSize: 14,
           fontFamily: 'Inter-Medium',
           marginLeft: 12,
+          color: Colors.black
         }}
         placeholder="Date of birth"
         placeholderTextColor="#000000"
+        value={date.toLocaleDateString()}
         editable={false}
       />
+      </TouchableOpacity>
       {showDatePicker && (
         <DateTimePicker
           testID="dateTimePicker"
@@ -46,6 +52,7 @@ const DateInput = () => {
           is24Hour={true}
           display="default"
           onChange={handleDateChange}
+          style={{color: '#000000'}}
         />
       )}
     </View>

@@ -85,11 +85,8 @@ export const style = StyleSheet.create({
     alignItems: "center",
     justifyContent: "space-around",
     borderRadius: 12,
-    // paddingLeft: 12,
-    // width: "50%"
   }, 
   doe:{
-    // width: "45%", 
     paddingLeft: 12, 
     backgroundColor: Colors.strokeWhite, 
     borderRadius: 12, 
@@ -101,14 +98,13 @@ export const style = StyleSheet.create({
     alignItems: "center",
     justifyContent: "space-around",
     borderRadius: 12,
-    // paddingLeft: 12,
     marginTop: 12
 },
 genView:{
-// backgroundColor: Colors.blue,
-marginTop: 24,
-// paddingVertical: 12,
+marginTop: 12,
+paddingHorizontal: 6,
 alignItems: "center",
+justifyContent: "space-around",
 flexDirection: "row" 
 },
 gen:{
@@ -120,24 +116,18 @@ gen:{
 genCon:{
     flexDirection: "row", 
     backgroundColor: Colors.strokeWhite, 
-    paddingVertical: 10, 
     borderRadius: 24, 
-    width: '40%',
-    justifyContent: 'space-around',
-    paddingHorizontal: 6
+    width: '45%',
+    height: 48,
+    justifyContent: 'space-evenly',
+    alignItems: "center"
 },
 male:{
-    // backgroundColor: Colors.white, 
-    width: '50%', 
-    // height: "40%",
     alignItems: "center", 
     justifyContent: "center", 
     borderRadius: 12,
 },
 femaleStyle:{
-  backgroundColor: Colors.strokeWhite, 
-  width: '50%', 
-  // height: "40%",
   alignItems: "center", 
   justifyContent: "center", 
   borderRadius: 12,
@@ -145,7 +135,7 @@ femaleStyle:{
 maleText:{
     color: Colors.black, 
     fontSize: 14,
-    fontFamily: 'Inter-Medium'
+    fontFamily: 'Inter-Medium',
 },
 femaleText:{
     color: Colors.black, 

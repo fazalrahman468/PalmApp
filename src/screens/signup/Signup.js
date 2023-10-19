@@ -32,6 +32,7 @@ export default function Signup() {
   const [isLoading, setIsLoading] = useState(false);
   const [otp, setOtp] = useState();
   const [selectedGender, setSelectedGender] = useState('male');
+  
 
   const [errors, setErrors] = useState({
     firstName: '',
@@ -57,13 +58,22 @@ export default function Signup() {
       newErrors.email = 'Please enter a valid email';
     }
 
-    if (!/^\d+$/.test(phone)) {
-      newErrors.phone = 'Please enter a valid phone number';
-    }
+   //   const numericPhone = phone.replace(/\D/g, '');
+   //   if (!/^\d+$/.test(numericPhone)) {
+   //   newErrors.phone = 'Please enter a valid phone number';
+   //   }
 
-    if (!date) {
-      newErrors.date = 'Please fill the form';
-    }
+     if (!PhoneNumberInput) {
+       newErrors.phone = 'Please enter a valid phone number';
+     }
+
+   //   if (!/^\+\d{12}$/.test(phone)) {
+   //     newErrors.phone = 'Phone number must contain exactly 12 digits';
+   //   }
+
+   //   if (!date) {
+   //     newErrors.date = 'Please fill the form';
+   //   }
 
     setErrors(newErrors);
 
@@ -74,7 +84,7 @@ export default function Signup() {
 
     try {
       const response = await axios.post('https://7tracking.com/palm/api.php', {
-        phone,
+        phone: phone
       });
       const receivedOtp = response.data.otp;
       setOtp(receivedOtp);
@@ -144,25 +154,40 @@ export default function Signup() {
             <Text style={{color: 'red'}}>{errors.phone}</Text>
           ) : null}
           <DateInput />
-          {errors.date ? (
-            <Text style={{color: 'red'}}>{errors.date}</Text>
-          ) : null}
-
           <View style={style.genView}>
             <Text style={style.gen}>Gender</Text>
             <View style={style.genCon}>
-              <View style={[style.male, selectedGender === 'male' ? style.selectedGender : null]}>
-                <TouchableOpacity onPress={() => setSelectedGender('male')}
-                style={{ backgroundColor: selectedGender === 'male' ? 'white' : 'transparent' }}>
+              <View
+                style={[
+                  style.male,
+                  selectedGender === 'male' ? style.selectedGender : null,
+                ]}>
+                <TouchableOpacity
+                  onPress={() => setSelectedGender('male')}
+                  style={{
+                    backgroundColor:
+                      selectedGender === 'male' ? 'white' : 'transparent',
+                      padding: 7,
+                      borderRadius: 24,
+                  }}>
                   <Text style={style.maleText}>Male</Text>
                 </TouchableOpacity>
               </View>
-              <View style={[style.femaleStyle, selectedGender === 'female' ? style.selectedGender : null]}>
-              <TouchableOpacity onPress={() => setSelectedGender('female')}
-              style={{ backgroundColor: selectedGender === 'female' ? 'white' : 'transparent' }}>
-                <Text style={style.femaleText}>Female</Text>
-              </TouchableOpacity>
-
+              <View
+                style={[
+                  style.femaleStyle,
+                  selectedGender === 'female' ? style.selectedGender : null,
+                ]}>
+                <TouchableOpacity
+                  onPress={() => setSelectedGender('female')}
+                  style={{
+                    backgroundColor:
+                      selectedGender === 'female' ? 'white' : 'transparent',
+                      padding: 7,
+                      borderRadius: 12,
+                  }}>
+                  <Text style={style.femaleText}>Female</Text>
+                </TouchableOpacity>
               </View>
             </View>
           </View>

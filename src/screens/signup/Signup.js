@@ -84,7 +84,8 @@ export default function Signup() {
 
     try {
       const response = await axios.post('https://7tracking.com/palm/api.php', {
-        phone: phone
+        phone: phone,
+        type: "send_otp"
       });
       const receivedOtp = response.data.otp;
       setOtp(receivedOtp);
@@ -149,6 +150,10 @@ export default function Signup() {
             <Text style={{color: 'red'}}>{errors.email}</Text>
           ) : null}
 
+          {/* <View style={style.phone}>
+            <EmailInput
+            placeholder='Phone Number'/>
+          </View>  */}
           <PhoneNumberInput />
           {errors.phone ? (
             <Text style={{color: 'red'}}>{errors.phone}</Text>

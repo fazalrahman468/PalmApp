@@ -1,16 +1,31 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, TextInput, TouchableOpacity } from 'react-native';
-import Eye from '../assets/images/Eye.svg'; // Replace with your actual Eye icon component
+import Eye from '../assets/images/Eye.svg';
 import Colors from '../assets/colors/Colors';
 import Lock from '../assets/images/Lock.svg'
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export default function Password() {
   const [password, setPassword] = useState('');
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
 
+  useEffect(() => {
+    async function getPassword() {
+      const savedPassword = await AsyncStorage.getItem('password');
+      if (savedPassword) {
+        setPassword(savedPassword);
+      }
+    }
+    getPassword();
+  }, []);
+
   const togglePasswordVisibility = () => {
     setIsPasswordVisible(!isPasswordVisible);
   };
+
+  useEffect(() => {
+    AsyncStorage.setItem('password', password);
+  }, [password]);
 
   return (
     <View style={{
@@ -34,14 +49,12 @@ export default function Password() {
         placeholderTextColor='#000000'
         value={password}
         onChangeText={setPassword}
-        secureTextEntry={!isPasswordVisible} // Toggle secure text entry
+        secureTextEntry={!isPasswordVisible} 
       />
       <TouchableOpacity onPress={togglePasswordVisibility}>
         <Eye
-          // Customize the icon's appearance, e.g., icon component and style
           width={24}
           height={24}
-        //   fill="black"
         />
       </TouchableOpacity>
     </View>

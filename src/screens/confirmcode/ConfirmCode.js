@@ -9,22 +9,19 @@ import {useNavigation} from '@react-navigation/native';
 
 export default function ConfirmCode() {
     const navigation = useNavigation();
-    const [otp, setOtp] = useState(''); // State to store OTP input
-    const [error, setError] = useState(''); // State to store error message
+    const [otp, setOtp] = useState(''); 
+    const [error, setError] = useState(''); 
   
-    // Function to handle OTP input change
+    
     const handleOtpChange = (text) => {
       setOtp(text);
-      // Clear any previous error message
       setError('');
     };
   
-    // Function to handle the confirmation button press
     const handleConfirmation = () => {
       if (otp.length !== 6) {
         setError('Please enter a valid 6-digit OTP code.');
       } else {
-        // Proceed to the next screen (CreatePassword) when OTP is valid
         navigation.navigate('CreatePassword');
       }
     };
@@ -46,6 +43,8 @@ export default function ConfirmCode() {
                 codeInputFieldStyle={style.underlineStyleBase}
                 placeholderTextColor='#000000'
                 onCodeFilled={(code) => handleOtpChange(code)}
+                keyboardAppearance='default'
+                keyboardType='number-pad'
                 />
             </View>
             {error ? <Text style={{color: 'red'}}>{error}</Text> : null}

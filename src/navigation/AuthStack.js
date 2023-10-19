@@ -13,6 +13,7 @@ import RecPassword from '../screens/recpassword/RecPassword';
 import AppStack from './AppStack';
 import Home from '../screens/home/Home';
 import Profile from '../screens/profile/Profile';
+import SignUpCard from '../components/SignUpCard';
 
 const Stack = createNativeStackNavigator();
 

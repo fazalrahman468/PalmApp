@@ -18,6 +18,7 @@ import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Password from '../../components/Password';
 import Colors from '../../assets/colors/Colors';
+import { login } from '../../api/Api';
 
 export default function WelcomeBack() {
   const [email, setEmail] = useState('');
@@ -46,8 +47,11 @@ export default function WelcomeBack() {
     try {
       const trimmedEmail = email.trim();
 
-      if (!trimmedEmail || !password) {
-        setError('Please provide both email and password.');
+      // console.log('Email:', email);
+    // console.log('Password:', password);
+
+      if (!trimmedEmail) {
+        setError('Please provide email');
         return;
       }
 
@@ -56,11 +60,22 @@ export default function WelcomeBack() {
         return;
       }
 
+      if (!password) {
+        setError('Please provide password.');
+        return;
+      }
+
+
       setLoading(true);
+
+      const savedPassword = await AsyncStorage.getItem('password');
+
+      if (password === savedPassword) {
 
       const response = await axios.post('https://7tracking.com/palm/api.php', {
         email: trimmedEmail,
         password,
+        type: "login"
       });
       setLoading(false);
 
@@ -73,6 +88,11 @@ export default function WelcomeBack() {
           setError('User does not exist or invalid credentials.');
         }
       }
+    }
+
+    else {
+      setError('Incorrect password.');
+    }
       // else {
       //   setError('User does not exist or invalid credentials.');
       // }

@@ -29,8 +29,6 @@ function AuthStack () {
         <Stack.Screen name='ResetPassword1' component={ResetPassword1}/>
         <Stack.Screen name='NewPassword' component={NewPassword}/>
         <Stack.Screen name='RecPassword' component={RecPassword}/>
-        <Stack.Screen name='Home' component={Home}/>
-        <Stack.Screen name='Profile' component={Profile}/>
        </Stack.Navigator>
     );
 }

@@ -7,7 +7,7 @@ function EmailInput1({icon, ...otherProps}) {
     <View style={styles.container}>
       {icon}
       <TextInput
-        placeholderTextColor="#000000"
+        placeholderTextColor="#B3B5B5"
         style={styles.email}
         {...otherProps}
       />

@@ -20,6 +20,7 @@ import Mail from '../../assets/images/Mail.svg';
 import axios from 'axios';
 import PhoneNumberInput from '../../components/PhoneSelector';
 import DateInput from '../../components/Date';
+import Password from '../../components/Password';
 
 export default function Signup() {
   const navigation = useNavigation();
@@ -32,13 +33,16 @@ export default function Signup() {
   const [isLoading, setIsLoading] = useState(false);
   const [otp, setOtp] = useState();
   const [selectedGender, setSelectedGender] = useState('male');
-  
+  const [password, setPassword] = useState('');
+  const [otpValue, setOtpValue] = useState('');
+
 
   const [errors, setErrors] = useState({
     firstName: '',
     lastName: '',
     email: '',
     phone: '',
+    password: "",
     date: '',
   });
 
@@ -58,22 +62,14 @@ export default function Signup() {
       newErrors.email = 'Please enter a valid email';
     }
 
-   //   const numericPhone = phone.replace(/\D/g, '');
-   //   if (!/^\d+$/.test(numericPhone)) {
-   //   newErrors.phone = 'Please enter a valid phone number';
-   //   }
 
-     if (!PhoneNumberInput) {
-       newErrors.phone = 'Please enter a valid phone number';
-     }
+    if (!PhoneNumberInput) {
+      newErrors.phone = 'Please enter a valid phone number';
+    }
 
-   //   if (!/^\+\d{12}$/.test(phone)) {
-   //     newErrors.phone = 'Phone number must contain exactly 12 digits';
-   //   }
-
-   //   if (!date) {
-   //     newErrors.date = 'Please fill the form';
-   //   }
+    if (!password) {
+      newErrors.password = 'Please enter a password';
+    }
 
     setErrors(newErrors);
 
@@ -82,18 +78,64 @@ export default function Signup() {
       return;
     }
 
-    try {
-      const response = await axios.post('https://7tracking.com/palm/api.php', {
-        phone: phone,
-        type: "send_otp"
-      });
-      const receivedOtp = response.data.otp;
-      setOtp(receivedOtp);
+    console.log(phone);
 
-      navigation.navigate('ConfirmCode', {
-        otp: receivedOtp,
-      });
-    } catch (error) {
+    try {
+      let data = new FormData();
+      data.append('type', 'send_otp');
+      data.append('phone', phone);
+      
+      let config = {
+        method: 'post',
+        url: 'https://7tracking.com/palm/api.php',
+        data : data
+      };
+      
+      axios.request(config)
+      .then((response) => {
+        
+              if (response.status === 200) {
+                const userId = response.data.user_id;
+                if (userId) {
+                  navigation.navigate('ConfirmCode',{
+                      email: email,
+                      password: password,
+                      first_name: firstName, 
+                      last_name: lastName,
+                      phone: phone,
+                      date: date,
+                      gender: selectedGender,
+                  });
+                } else {
+                  setErrors('User does not exist or invalid credentials.');
+                }
+        
+              }
+              else {
+                setErrors('An error occurred during the login process.');
+              }
+      })
+
+      // const response = await axios.post('https://7tracking.com/palm/api.php', {
+      //   phone: phone,
+      //   type: 'send_otp',
+      // });
+      // const receivedOtp = response.data.otp;
+      // setOtp(receivedOtp);
+
+      // navigation.navigate('ConfirmCode', {
+      //   otp: receivedOtp,
+      //   email: email,
+      //   password: password,
+      //   firstName: firstName, 
+      //   lastName: lastName,
+      //   phone: phone,
+      //   date: date,
+      //   selectedGender: selectedGender,
+      
+      // });
+    } 
+    catch (error) {
       console.error('Error sending OTP:', error);
       setIsLoading(false);
     }
@@ -106,7 +148,6 @@ export default function Signup() {
         <Text style={style.account}>Create your account</Text>
         <Osios />
         <Text style={style.using}>Or Using</Text>
-
         <View style={style.box}>
           <View style={{flexDirection: 'row'}}>
             <View style={{width: '50%'}}>
@@ -149,15 +190,13 @@ export default function Signup() {
           {errors.email ? (
             <Text style={{color: 'red'}}>{errors.email}</Text>
           ) : null}
-
-          {/* <View style={style.phone}>
-            <EmailInput
-            placeholder='Phone Number'/>
-          </View>  */}
-          <PhoneNumberInput />
+          <PhoneNumberInput onChangeText={arg => setPhone(arg)} />
           {errors.phone ? (
             <Text style={{color: 'red'}}>{errors.phone}</Text>
           ) : null}
+          <View style={{marginTop: 12}}>
+            <Password onChangeText={setPassword}/>  
+          </View>
           <DateInput />
           <View style={style.genView}>
             <Text style={style.gen}>Gender</Text>
@@ -172,8 +211,8 @@ export default function Signup() {
                   style={{
                     backgroundColor:
                       selectedGender === 'male' ? 'white' : 'transparent',
-                      padding: 7,
-                      borderRadius: 24,
+                    padding: 7,
+                    borderRadius: 24,
                   }}>
                   <Text style={style.maleText}>Male</Text>
                 </TouchableOpacity>
@@ -188,8 +227,8 @@ export default function Signup() {
                   style={{
                     backgroundColor:
                       selectedGender === 'female' ? 'white' : 'transparent',
-                      padding: 7,
-                      borderRadius: 12,
+                    padding: 7,
+                    borderRadius: 12,
                   }}>
                   <Text style={style.femaleText}>Female</Text>
                 </TouchableOpacity>

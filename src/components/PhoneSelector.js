@@ -3,7 +3,7 @@ import {View, TextInput, Text} from 'react-native';
 import CountryPicker from 'react-native-country-picker-modal';
 import Colors from '../assets/colors/Colors';
 
-const PhoneNumberInput = () => {
+const PhoneNumberInput = ({onChangeText=()=>""}) => {
   const [countryCode, setCountryCode] = useState('PK');
   const [phoneNumber, setPhoneNumber] = useState('');
   const [phoneNumberError, setPhoneNumberError] = useState('');
@@ -48,10 +48,13 @@ const PhoneNumberInput = () => {
           color: Colors.black,
         }}
         placeholder="Phone Number"
-        placeholderTextColor="#000000"
+        placeholderTextColor="#B3B5B5"
         keyboardType="phone-pad"
         value={phoneNumber}
-        onChangeText={text => setPhoneNumber(text)}
+        onChangeText={text => {
+          setPhoneNumber(text)
+          onChangeText(text)
+        }}
         onBlur={validatePhoneNumber}
       />
       

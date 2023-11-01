@@ -5,7 +5,7 @@ import Colors from '../assets/colors/Colors';
 import Calendar from '../assets/images/Calendar.svg';
 
 const DateInput = () => {
-  const [date, setDate] = useState(new Date());
+  const [date, setDate] = useState(null);
   const [showDatePicker, setShowDatePicker] = useState(false);
 
   const handleDateChange = (event, selectedDate) => {
@@ -14,11 +14,10 @@ const DateInput = () => {
     setDate(currentDate);
   };
 
-  // const [inputValue, setInputValue] = useState('');
 
   return (
-    <View
-      style={{
+    <TouchableOpacity onPress={() => setShowDatePicker(true)}
+    style={{
         flexDirection: 'row',
         alignItems: 'center',
         backgroundColor: Colors.strokeWhite,
@@ -26,36 +25,31 @@ const DateInput = () => {
         borderRadius: 12,
         paddingLeft: 12,
       }}>
-      <TouchableOpacity onPress={() => setShowDatePicker(true)}>
         <Calendar />
-      </TouchableOpacity>
-      <TouchableOpacity>
       <TextInput
         style={{
-          flex: 1,
           fontSize: 14,
           fontFamily: 'Inter-Medium',
           marginLeft: 12,
-          color: Colors.black
+          color: date ? Colors.black : '#B3B5B5',
+          width: "100%"
         }}
         placeholder="Date of birth"
-        placeholderTextColor="#000000"
-        value={date.toLocaleDateString()}
+        placeholderTextColor="#B3B5B5"
+        value={date ? date.toLocaleDateString() : ''}
         editable={false}
       />
-      </TouchableOpacity>
       {showDatePicker && (
         <DateTimePicker
           testID="dateTimePicker"
-          value={date}
+          value={date || new Date()}
           mode="date"
           is24Hour={true}
           display="default"
           onChange={handleDateChange}
-          style={{color: '#000000'}}
         />
       )}
-    </View>
+    </TouchableOpacity>
   );
 };
 export default DateInput;

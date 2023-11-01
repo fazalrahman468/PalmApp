@@ -15,10 +15,7 @@ import Osios from '../../components/Osios';
 import Sand from '../../assets/images/Sand.svg';
 import {useNavigation} from '@react-navigation/native';
 import axios from 'axios';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import Password from '../../components/Password';
-import Colors from '../../assets/colors/Colors';
-import { login } from '../../api/Api';
 
 export default function WelcomeBack() {
   const [email, setEmail] = useState('');
@@ -27,16 +24,6 @@ export default function WelcomeBack() {
   const [loading, setLoading] = useState(false);
 
   const navigation = useNavigation();
-
-  useEffect(() => {
-    const checkLoggedIn = async () => {
-      const userId = await AsyncStorage.getItem('userId');
-      if (userId) {
-        navigation.navigate('Home');
-      }
-    };
-    checkLoggedIn();
-  }, [navigation]);
 
   const isEmailValid = email => {
     const emailRegex = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i;
@@ -47,11 +34,8 @@ export default function WelcomeBack() {
     try {
       const trimmedEmail = email.trim();
 
-      // console.log('Email:', email);
-    // console.log('Password:', password);
-
       if (!trimmedEmail) {
-        setError('Please provide email');
+        setError('Please provide an email');
         return;
       }
 
@@ -61,49 +45,56 @@ export default function WelcomeBack() {
       }
 
       if (!password) {
-        setError('Please provide password.');
+        setError('Please provide a password.');
         return;
       }
 
+      console.log(trimmedEmail,password)
+
 
       setLoading(true);
-
-      const savedPassword = await AsyncStorage.getItem('password');
-
-      if (password === savedPassword) {
-
-      const response = await axios.post('https://7tracking.com/palm/api.php', {
-        email: trimmedEmail,
-        password,
-        type: "login"
+      let data = new FormData();
+      data.append('type', 'login');
+      data.append('email', trimmedEmail);
+      data.append('password', password);
+      
+      let config = {
+        method: 'post',
+        url: 'https://7tracking.com/palm/api.php',
+        data : data
+      };
+      
+      axios.request(config)
+      .then((response) => {
+        
+              if (response.status === 200) {
+                const userId = response.data.user_id;
+                if (userId) {
+                  navigation.navigate('App',{screen: "Home"});
+                } else {
+                  setError('User does not exist or invalid credentials.');
+                }
+        
+              }
+              else {
+                setError('An error occurred during the login process.');
+              }
+      })
+      .catch((error) => {
+        console.log(error);
       });
+      
       setLoading(false);
-
-      if (response.status === 200) {
-        const userId = response.data.userId;
-        if (userId) {
-          await AsyncStorage.setItem('userId', userId);
-          navigation.navigate('Home');
-        } else {
-          setError('User does not exist or invalid credentials.');
-        }
-      }
     }
-
-    else {
-      setError('Incorrect password.');
-    }
-      // else {
-      //   setError('User does not exist or invalid credentials.');
-      // }
-    } catch (error) {
+      
+     catch (error) {
       console.error('Error in login:', error);
       setError('An error occurred. Please try again.');
       setLoading(false);
     }
   };
 
-
+  const canProceed = email && password;
 
   return (
     <View style={style.container}>
@@ -121,14 +112,14 @@ export default function WelcomeBack() {
           />
         </View>
         <View style={style.password}>
-          <Password />
+          <Password  onChangeText={(text)=>setPassword(text)}/>
         </View>
 
         <View style={style.buttonView}>
           {loading ? (
             <ActivityIndicator size={30} color="#000000" />
           ) : (
-            <Button title="Login" onPress={handleLogin} color= '#26BA78'/>
+            <Button title="Login" onPress={handleLogin} color= '#26BA78' disabled={!canProceed}/>
           )}
           <Text style={{color: 'red'}}>{error}</Text>
         </View>

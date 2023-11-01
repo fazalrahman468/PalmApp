@@ -1,5 +1,5 @@
 import React from 'react'
-import { View, Image, ScrollView, TouchableOpacity } from 'react-native'
+import { View, Image, ScrollView, TouchableOpacity,Text } from 'react-native'
 import { style } from './Style'
 import Logo1 from '../../assets/images/Logo1.svg'
 import Bell from '../../assets/images/Bell.svg'

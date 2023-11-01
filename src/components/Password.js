@@ -5,32 +5,45 @@ import Colors from '../assets/colors/Colors';
 import Lock from '../assets/images/Lock.svg'
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-export default function Password() {
+export default function Password({onChangeText}) {
   const [password, setPassword] = useState('');
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
 
-  useEffect(() => {
-    async function getPassword() {
-      const savedPassword = await AsyncStorage.getItem('password');
-      if (savedPassword) {
-        setPassword(savedPassword);
-      }
-    }
-    getPassword();
-  }, []);
+  // useEffect(() => {
+  //   async function getPassword() {
+  //     const savedPassword = await AsyncStorage.getItem('password');
+  //     if (savedPassword) {
+  //       setPassword(savedPassword);
+  //     }
+  //   }
+  //   getPassword();
+  // }, []);
 
   const togglePasswordVisibility = () => {
     setIsPasswordVisible(!isPasswordVisible);
   };
 
-  useEffect(() => {
-    AsyncStorage.setItem('password', password);
-  }, [password]);
+  const handlePasswordChange = (newPassword) => {
+    setPassword(newPassword);
+
+    // Call the onPasswordChange function passed as a prop
+    if (onChangeText) {
+      onChangeText(newPassword);
+    }
+  };
+
+  // useEffect(() => {
+  //   AsyncStorage.setItem('password', password);
+  // }, [password]);
+
+  // useEffect(() => {
+  //   onPasswordChange(password);
+  // }, [password, onPasswordChange]);
 
   return (
     <View style={{
         backgroundColor: Colors.strokeWhite,
-        width: '90%',
+        // width: '90%',
         borderRadius: 12,
         flexDirection: "row",
         alignItems: "center",
@@ -43,15 +56,16 @@ export default function Password() {
             fontSize: 14,
             fontFamily: 'Inter-Medium',
             marginLeft: 12,
-            flex:1, color: Colors.black
+            flex:1, 
+            color: Colors.black
         }}
         placeholder="Password"
-        placeholderTextColor='#000000'
+        placeholderTextColor='#B3B5B5'
         value={password}
-        onChangeText={setPassword}
+        onChangeText={handlePasswordChange}
         secureTextEntry={!isPasswordVisible} 
       />
-      <TouchableOpacity onPress={togglePasswordVisibility}>
+      <TouchableOpacity onPress={togglePasswordVisibility} style={{marginRight: 12}}>
         <Eye
           width={24}
           height={24}

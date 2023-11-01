@@ -6,7 +6,7 @@ import AuthStack from './AuthStack';
 
 const Stack = createNativeStackNavigator();
 
-function RootStack () {
+function RootStack () { 
     return(
        <Stack.Navigator screenOptions={{headerShown: false}}>
         <Stack.Screen name='Auth' component={AuthStack}/>
@@ -15,3 +15,5 @@ function RootStack () {
     );
 }
 export default RootStack;
+
+// navigation.navigate('App',{screen:"Home"})

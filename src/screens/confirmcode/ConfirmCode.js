@@ -20,9 +20,8 @@ export default function ConfirmCode() {
     lastName: '',
     email: '',
     phone: '',
-    password: "",
+    password: '',
     date: '',
-    
   });
 
   const route = useRoute();
@@ -51,9 +50,10 @@ export default function ConfirmCode() {
       console.log(lastName);
       console.log(phone);
       console.log(email);
-      console.log(selectedGender);
+      console.log(password);
       console.log(date);
-      console.log(password)
+      console.log(selectedGender);
+
       try {
         setIsLoading(true);
         let data = new FormData();
@@ -78,15 +78,12 @@ export default function ConfirmCode() {
               // otp: receivedOtp,
               email: email,
               password: password,
-              first_name: firstName, 
+              first_name: firstName,
               last_name: lastName,
               phone: phone,
               date: date,
               gender: selectedGender,
             });
-
-
-           
           } else {
             setErrors('An error occurred during the reg process.');
           }

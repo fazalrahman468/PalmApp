@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useRef} from 'react';
 import {
   View,
   Text,
@@ -21,6 +21,8 @@ import axios from 'axios';
 import PhoneNumberInput from '../../components/PhoneSelector';
 import DateInput from '../../components/Date';
 import Password from '../../components/Password';
+import PhoneInput from 'react-native-phone-number-input';
+import Colors from '../../assets/colors/Colors';
 
 export default function Signup() {
   const navigation = useNavigation();
@@ -28,22 +30,22 @@ export default function Signup() {
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
   const [email, setEmail] = useState('');
-  const [phone, setPhone] = useState('');
+  const [phoneNumber, setPhoneNumber] = useState('');
   const [date, setDate] = useState('');
   const [isLoading, setIsLoading] = useState(false);
-  const [otp, setOtp] = useState();
   const [selectedGender, setSelectedGender] = useState('male');
   const [password, setPassword] = useState('');
-  const [otpValue, setOtpValue] = useState('');
-
+  const [value, setValue] = useState("");
+  const phoneInput = useRef(null);
 
   const [errors, setErrors] = useState({
     firstName: '',
     lastName: '',
     email: '',
     phone: '',
-    password: "",
+    password: '',
     date: '',
+    gender: "",
   });
 
   const saveData = async () => {
@@ -62,8 +64,7 @@ export default function Signup() {
       newErrors.email = 'Please enter a valid email';
     }
 
-
-    if (!PhoneNumberInput) {
+    if (!phoneNumber) {
       newErrors.phone = 'Please enter a valid phone number';
     }
 
@@ -78,43 +79,45 @@ export default function Signup() {
       return;
     }
 
-    console.log(phone);
+    console.log(firstName);
+    console.log(lastName);
+    console.log(email);
+    console.log(phoneNumber);
+    console.log(password);
+    console.log(date);
+    console.log(selectedGender);
 
     try {
       let data = new FormData();
       data.append('type', 'send_otp');
-      data.append('phone', phone);
-      
+      data.append('phone', phoneNumber);
+
       let config = {
         method: 'post',
         url: 'https://7tracking.com/palm/api.php',
-        data : data
+        data: data,
       };
-      
-      axios.request(config)
-      .then((response) => {
-        
-              if (response.status === 200) {
-                const userId = response.data.user_id;
-                if (userId) {
-                  navigation.navigate('ConfirmCode',{
-                      email: email,
-                      password: password,
-                      first_name: firstName, 
-                      last_name: lastName,
-                      phone: phone,
-                      date: date,
-                      gender: selectedGender,
-                  });
-                } else {
-                  setErrors('User does not exist or invalid credentials.');
-                }
-        
-              }
-              else {
-                setErrors('An error occurred during the login process.');
-              }
-      })
+
+      axios.request(config).then(response => {
+        if (response.status === 200) {
+          const userId = response.data.user_id;
+          if (userId) {
+            navigation.navigate('ConfirmCode', {
+              first_name: firstName,
+              last_name: lastName,
+              email: email,
+              phone: phoneNumber,
+              password: password,
+              date: date,
+              gender: selectedGender,
+            });
+          } else {
+            setErrors('User does not exist or invalid credentials.');
+          }
+        } else {
+          setErrors('An error occurred during the login process.');
+        }
+      });
 
       // const response = await axios.post('https://7tracking.com/palm/api.php', {
       //   phone: phone,
@@ -127,19 +130,20 @@ export default function Signup() {
       //   otp: receivedOtp,
       //   email: email,
       //   password: password,
-      //   firstName: firstName, 
+      //   firstName: firstName,
       //   lastName: lastName,
       //   phone: phone,
       //   date: date,
       //   selectedGender: selectedGender,
-      
+
       // });
-    } 
-    catch (error) {
+    } catch (error) {
       console.error('Error sending OTP:', error);
       setIsLoading(false);
     }
   };
+
+
 
   return (
     <ScrollView>
@@ -190,14 +194,25 @@ export default function Signup() {
           {errors.email ? (
             <Text style={{color: 'red'}}>{errors.email}</Text>
           ) : null}
-          <PhoneNumberInput onChangeText={arg => setPhone(arg)} />
+          <PhoneInput 
+          defaultCode='PK'
+          defaultValue={phoneNumber}
+          onChangeFormattedText={(text) => {setPhoneNumber(text)}}
+          containerStyle={{backgroundColor: Colors.strokeWhite, 
+            marginTop:12, 
+            borderRadius: 12, 
+            width: "100%", 
+          }}
+          textContainerStyle={{backgroundColor: Colors.strokeWhite, borderRadius: 12,}}
+          withDarkTheme
+          />
           {errors.phone ? (
             <Text style={{color: 'red'}}>{errors.phone}</Text>
           ) : null}
           <View style={{marginTop: 12}}>
-            <Password onChangeText={setPassword}/>  
+            <Password onChangeText={text => setPassword(text)} />
           </View>
-          <DateInput />
+          <DateInput/>
           <View style={style.genView}>
             <Text style={style.gen}>Gender</Text>
             <View style={style.genCon}>

@@ -12,6 +12,7 @@ const DateInput = () => {
     const currentDate = selectedDate || date;
     setShowDatePicker(false);
     setDate(currentDate);
+   
   };
 
 
@@ -38,6 +39,7 @@ const DateInput = () => {
         placeholderTextColor="#B3B5B5"
         value={date ? date.toLocaleDateString() : ''}
         editable={false}
+      
       />
       {showDatePicker && (
         <DateTimePicker

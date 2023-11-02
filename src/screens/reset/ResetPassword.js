@@ -6,10 +6,13 @@ import BackArrow from '../../assets/images/BackArrow.svg';
 import {useNavigation} from '@react-navigation/native';
 import PhoneNumberInput from '../../components/PhoneSelector';
 import axios from 'axios';
+import PhoneInput from 'react-native-phone-number-input';
+import Colors from '../../assets/colors/Colors';
 
 export default function ResetPassword() {
   const navigation = useNavigation();
   const [phone, setPhone] = useState();
+  const [phoneNumber, setPhoneNumber] = useState('');
   const [isLoading, setIsLoading] = useState(false);
 
   const [errors, setErrors] = useState({
@@ -18,7 +21,8 @@ export default function ResetPassword() {
 
 
   const saveData = async () => {
-    if (!PhoneNumberInput) {
+    const newErrors = {};
+    if (!phoneNumber) {
       newErrors.phone = 'Please enter a valid phone number';
     }
     console.log(phone);
@@ -26,7 +30,7 @@ export default function ResetPassword() {
     try {
       let data = new FormData();
       data.append('type', 'send_otp');
-      data.append('phone', phone);
+      data.append('phone', phoneNumber);
 
       let config = {
         method: 'post',
@@ -39,7 +43,7 @@ export default function ResetPassword() {
           const userId = response.data.user_id;
           if (userId) {
             navigation.navigate('ConfirmCode', {
-              phone: phone,
+              phone: phoneNumber,
             });
           } else {
             setErrors('User does not exist or invalid credentials.');
@@ -83,7 +87,21 @@ export default function ResetPassword() {
         </Text>
       </View>
       <View style={style.box}>
-        <PhoneNumberInput onChangeText={arg => setPhone(arg)} />
+      <PhoneInput 
+          defaultCode='PK'
+          defaultValue={phoneNumber}
+          onChangeFormattedText={(text) => {setPhoneNumber(text)}}
+          containerStyle={{backgroundColor: Colors.strokeWhite, 
+            marginTop:12, 
+            borderRadius: 12, 
+            width: "100%", 
+            height: 50
+          }}
+          textContainerStyle={{backgroundColor: Colors.strokeWhite, borderRadius: 12,}}
+          textInputStyle={{height:48, }}
+          withDarkTheme
+          />
+        {/* <PhoneNumberInput onChangeText={arg => setPhone(arg)} /> */}
         <View style={style.buttonView}>
           <Button title="Continue" onPress={saveData} color="#26BA78" />
         </View>

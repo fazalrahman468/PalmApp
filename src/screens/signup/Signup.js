@@ -18,7 +18,6 @@ import {useNavigation} from '@react-navigation/native';
 import Osios from '../../components/Osios';
 import Mail from '../../assets/images/Mail.svg';
 import axios from 'axios';
-import PhoneNumberInput from '../../components/PhoneSelector';
 import DateInput from '../../components/Date';
 import Password from '../../components/Password';
 import PhoneInput from 'react-native-phone-number-input';
@@ -35,7 +34,7 @@ export default function Signup() {
   const [isLoading, setIsLoading] = useState(false);
   const [selectedGender, setSelectedGender] = useState('male');
   const [password, setPassword] = useState('');
-  const [value, setValue] = useState("");
+  const [value, setValue] = useState('');
   const phoneInput = useRef(null);
 
   const [errors, setErrors] = useState({
@@ -45,7 +44,7 @@ export default function Signup() {
     phone: '',
     password: '',
     date: '',
-    gender: "",
+    gender: '',
   });
 
   const saveData = async () => {
@@ -86,6 +85,7 @@ export default function Signup() {
     console.log(password);
     console.log(date);
     console.log(selectedGender);
+    
 
     try {
       let data = new FormData();
@@ -102,6 +102,7 @@ export default function Signup() {
         if (response.status === 200) {
           const userId = response.data.user_id;
           if (userId) {
+            setIsLoading(false);
             navigation.navigate('ConfirmCode', {
               first_name: firstName,
               last_name: lastName,
@@ -118,32 +119,12 @@ export default function Signup() {
           setErrors('An error occurred during the login process.');
         }
       });
-
-      // const response = await axios.post('https://7tracking.com/palm/api.php', {
-      //   phone: phone,
-      //   type: 'send_otp',
-      // });
-      // const receivedOtp = response.data.otp;
-      // setOtp(receivedOtp);
-
-      // navigation.navigate('ConfirmCode', {
-      //   otp: receivedOtp,
-      //   email: email,
-      //   password: password,
-      //   firstName: firstName,
-      //   lastName: lastName,
-      //   phone: phone,
-      //   date: date,
-      //   selectedGender: selectedGender,
-
-      // });
     } catch (error) {
       console.error('Error sending OTP:', error);
       setIsLoading(false);
     }
   };
-
-
+  
 
   return (
     <ScrollView>
@@ -194,25 +175,35 @@ export default function Signup() {
           {errors.email ? (
             <Text style={{color: 'red'}}>{errors.email}</Text>
           ) : null}
-          <PhoneInput 
-          defaultCode='PK'
-          defaultValue={phoneNumber}
-          onChangeFormattedText={(text) => {setPhoneNumber(text)}}
-          containerStyle={{backgroundColor: Colors.strokeWhite, 
-            marginTop:12, 
-            borderRadius: 12, 
-            width: "100%", 
-          }}
-          textContainerStyle={{backgroundColor: Colors.strokeWhite, borderRadius: 12,}}
-          withDarkTheme
+
+          <PhoneInput
+            defaultCode="PK"
+            defaultValue={phoneNumber}
+            onChangeFormattedText={text => {
+              setPhoneNumber(text);
+            }}
+            containerStyle={{
+              backgroundColor: Colors.strokeWhite,
+              marginTop: 12,
+              borderRadius: 12,
+              width: '100%',
+              height: 50,
+            }}
+            textContainerStyle={{
+              backgroundColor: Colors.strokeWhite,
+              borderRadius: 12,
+            }}
+            textInputStyle={{height: 48}}
+            withDarkTheme
           />
+
           {errors.phone ? (
             <Text style={{color: 'red'}}>{errors.phone}</Text>
           ) : null}
           <View style={{marginTop: 12}}>
             <Password onChangeText={text => setPassword(text)} />
           </View>
-          <DateInput/>
+          <DateInput />
           <View style={style.genView}>
             <Text style={style.gen}>Gender</Text>
             <View style={style.genCon}>
@@ -258,7 +249,6 @@ export default function Signup() {
             )}
           </View>
         </View>
-
         <Sand />
       </View>
     </ScrollView>

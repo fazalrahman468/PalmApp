@@ -42,9 +42,7 @@ export default function ConfirmCode() {
     if (otp.length !== 6) {
       setError('Please enter a valid 6-digit OTP code.');
     }
-    //   else if (otp !== receivedOtp) {
-    //   setError('Invalid OTP code.');
-    // }
+   
     else {
       console.log(firstName);
       console.log(lastName);
@@ -75,7 +73,6 @@ export default function ConfirmCode() {
         axios.request(config).then(response => {
           if (response.status === 200) {
             navigation.navigate('WelcomeBack', {
-              // otp: receivedOtp,
               email: email,
               password: password,
               first_name: firstName,
@@ -89,31 +86,6 @@ export default function ConfirmCode() {
           }
         });
 
-        // const response = await axios.post(
-        //   'https://7tracking.com/palm/api.php',
-        //   {
-        //     otp,
-        //     email,
-        //     password,
-        //     firstName,
-        //     lastName,
-        //     phone,
-        //     gender:selectedGender,
-        //     dob,
-        //     type: 'register',
-        //   },
-        // );
-
-        // if (response.status === 200) {
-        //   setIsLoading(false);
-        //   navigation.navigate('WelcomeBack', {
-        //     receivedEmail: email,
-        //     receivedPassword: password,
-        //   });
-        // } else {
-        //   setError('Registration failed. Please try again.');
-        //   setIsLoading(false);
-        // }
       } catch (error) {
         console.error('Error during registration:', error);
         setError('An error occurred during registration. Please try again.');
@@ -132,7 +104,7 @@ export default function ConfirmCode() {
         <Text style={style.code}>We sent you a code</Text>
         <Text style={style.enter}>
           Enter it below to verify {}
-          <Text style={style.num}>+99624443524</Text>{' '}
+          <Text style={style.num}>{phone}</Text>{' '}
         </Text>
         <View style={style.conView}>
           <OTPInputView
